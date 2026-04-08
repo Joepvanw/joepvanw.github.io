@@ -191,7 +191,7 @@ form.addEventListener('submit', async (e) => {
 
     if (json.success) {
       form.style.display = 'none';
-      formSuccess.hidden = false;
+      formSuccess.classList.add('visible');
       formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
       submitBtn.disabled = false;

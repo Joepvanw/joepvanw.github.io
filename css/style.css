@@ -997,6 +997,10 @@ ul { list-style: none; }
 }
 
 .form__success {
+  display: none;
+}
+
+.form__success.visible {
   display: flex;
   align-items: center;
   gap: 12px;
