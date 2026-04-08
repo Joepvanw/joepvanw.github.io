@@ -958,6 +958,17 @@ ul { list-style: none; }
   min-height: 18px;
 }
 
+.form__error.letop {
+  color: #d97706;
+}
+
+.letop-label {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #d97706;
+}
+
 .form__group--checkbox {
   gap: 4px;
 }

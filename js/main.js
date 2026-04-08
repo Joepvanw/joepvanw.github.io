@@ -87,23 +87,31 @@ document.querySelectorAll('.faq__question').forEach(btn => {
 });
 
 /* =============================================
-   CONTACT FORM VALIDATION
+   CONTACT FORM VALIDATION & SUBMISSION
    ============================================= */
 const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formSuccess = document.getElementById('formSuccess');
 
+const WEB3FORMS_KEY = 'JOUW_ACCESS_KEY_HIER';
+
 function showError(fieldId, message) {
   const errorEl = document.getElementById(`${fieldId}Error`);
   const input = document.getElementById(fieldId);
-  if (errorEl) errorEl.textContent = message;
+  if (errorEl) {
+    errorEl.innerHTML = `<span class="letop-label">Let op:</span> ${message}`;
+    errorEl.classList.add('letop');
+  }
   if (input) input.classList.add('error');
 }
 
 function clearError(fieldId) {
   const errorEl = document.getElementById(`${fieldId}Error`);
   const input = document.getElementById(fieldId);
-  if (errorEl) errorEl.textContent = '';
+  if (errorEl) {
+    errorEl.innerHTML = '';
+    errorEl.classList.remove('letop');
+  }
   if (input) input.classList.remove('error');
 }
 
@@ -122,66 +130,79 @@ form.addEventListener('submit', async (e) => {
 
   let valid = true;
 
-  // Voornaam
   const voornaam = document.getElementById('voornaam').value.trim();
-  if (!voornaam) {
-    showError('voornaam', 'Vul uw voornaam in.');
-    valid = false;
-  } else {
-    clearError('voornaam');
-  }
+  if (!voornaam) { showError('voornaam', 'vul uw voornaam in.'); valid = false; }
+  else clearError('voornaam');
 
-  // Achternaam
   const achternaam = document.getElementById('achternaam').value.trim();
-  if (!achternaam) {
-    showError('achternaam', 'Vul uw achternaam in.');
-    valid = false;
-  } else {
-    clearError('achternaam');
-  }
+  if (!achternaam) { showError('achternaam', 'vul uw achternaam in.'); valid = false; }
+  else clearError('achternaam');
 
-  // Email
   const email = document.getElementById('email').value.trim();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email) {
-    showError('email', 'Vul uw e-mailadres in.');
-    valid = false;
-  } else if (!emailRegex.test(email)) {
-    showError('email', 'Vul een geldig e-mailadres in.');
-    valid = false;
-  } else {
-    clearError('email');
-  }
+  if (!email) { showError('email', 'vul uw e-mailadres in.'); valid = false; }
+  else if (!emailRegex.test(email)) { showError('email', 'vul een geldig e-mailadres in.'); valid = false; }
+  else clearError('email');
 
-  // Adres
   const adres = document.getElementById('adres').value.trim();
-  if (!adres) {
-    showError('adres', 'Vul het adres van het pand in.');
-    valid = false;
-  } else {
-    clearError('adres');
-  }
+  if (!adres) { showError('adres', 'vul het adres van het pand in.'); valid = false; }
+  else clearError('adres');
 
-  // Akkoord
   const akkoord = document.getElementById('akkoord').checked;
   if (!akkoord) {
-    document.getElementById('akkoordError').textContent = 'U dient akkoord te gaan met de privacyverklaring.';
+    const el = document.getElementById('akkoordError');
+    el.innerHTML = '<span class="letop-label">Let op:</span> u dient akkoord te gaan met de privacyverklaring.';
+    el.classList.add('letop');
     valid = false;
   } else {
-    document.getElementById('akkoordError').textContent = '';
+    const el = document.getElementById('akkoordError');
+    el.innerHTML = '';
+    el.classList.remove('letop');
   }
 
   if (!valid) return;
 
-  // Simulate form submission
   submitBtn.disabled = true;
   submitBtn.textContent = 'Verzenden...';
 
-  await new Promise(resolve => setTimeout(resolve, 1200));
+  const situatie = document.getElementById('situatie').value.trim();
+  const telefoon = document.getElementById('telefoon').value.trim();
 
-  form.style.display = 'none';
-  formSuccess.hidden = false;
-  formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const data = {
+    access_key: WEB3FORMS_KEY,
+    subject: `Nieuwe schadeaanvraag van ${voornaam} ${achternaam}`,
+    from_name: `${voornaam} ${achternaam}`,
+    email: email,
+    Naam: `${voornaam} ${achternaam}`,
+    'E-mailadres': email,
+    'Telefoonnummer': telefoon || '—',
+    'Adres pand': adres,
+    'Situatie': situatie || '—',
+  };
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const json = await res.json();
+
+    if (json.success) {
+      form.style.display = 'none';
+      formSuccess.hidden = false;
+      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Gratis intake aanvragen';
+      alert('Er ging iets mis. Probeer het opnieuw of stuur een e-mail naar info@joepdeschademan.nl');
+    }
+  } catch {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Gratis intake aanvragen';
+    alert('Er ging iets mis. Controleer uw internetverbinding en probeer het opnieuw.');
+  }
 });
 
 /* =============================================
