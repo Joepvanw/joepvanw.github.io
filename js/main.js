@@ -93,7 +93,7 @@ const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formSuccess = document.getElementById('formSuccess');
 
-const WEB3FORMS_KEY = 'JOUW_ACCESS_KEY_HIER';
+const WEB3FORMS_KEY = '1c236178-42d7-41d5-b031-a6fc5db562ff';
 
 function showError(fieldId, message) {
   const errorEl = document.getElementById(`${fieldId}Error`);
