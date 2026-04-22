@@ -167,6 +167,7 @@ form.addEventListener('submit', async (e) => {
 
   const situatie = document.getElementById('situatie').value.trim();
   const telefoon = document.getElementById('telefoon').value.trim();
+  const gebeld = document.getElementById('gebeld').checked ? 'Ja' : 'Nee';
 
   const data = {
     access_key: WEB3FORMS_KEY,
@@ -178,6 +179,7 @@ form.addEventListener('submit', async (e) => {
     'Telefoonnummer': telefoon || '—',
     'Adres pand': adres,
     'Situatie': situatie || '—',
+    'Wil gebeld worden': gebeld,
   };
 
   try {
