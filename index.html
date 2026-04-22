@@ -21,7 +21,10 @@
           <path d="M10 28L20 12L30 28" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M14 22H26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
-        <span class="logo__text">Mijnbouwschade<strong>Hulp</strong></span>
+        <span class="logo__text" style="display:flex;flex-direction:column;line-height:1.2;">
+          <span>Mijnbouwschade<strong>Hulp</strong></span>
+          <span style="font-size:0.8rem;color:var(--color-text-muted);font-weight:800;">JoepdeSchademan</span>
+        </span>
       </a>
 
       <nav class="nav" id="nav">
@@ -55,7 +58,7 @@
           <ul class="hero__checks">
             <li>
               <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#1a56db"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span><span class="text-accent" style="font-weight:800;">No Cure, No Pay</span><br>u betaalt pas als uw aanvraag is toegewezen — bij geen resultaat betaalt u niets</span>
+              <span><span class="text-accent" style="font-weight:800;">No Cure, No Pay</span><br>u betaalt pas als uw vergoeding is uitgekeerd — bij geen resultaat betaalt u niets</span>
             </li>
             <li>
               <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#1a56db"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -63,8 +66,9 @@
             </li>
             <li>
               <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#1a56db"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Meer dan 500 succesvolle aanvragen afgehandeld
+              Persoonlijk Advies Op Maat
             </li>
+
           </ul>
           <div class="hero__actions">
             <a href="#contact" class="btn btn--primary btn--lg">Gratis intake aanvragen</a>
@@ -95,8 +99,8 @@
     <section class="trustbar">
       <div class="container trustbar__inner">
         <div class="trustbar__item">
-          <strong>500+</strong>
-          <span>Afgehandelde aanvragen</span>
+          <strong>Persoonlijk</strong>
+          <span>Advies op maat</span>
         </div>
         <div class="trustbar__divider"></div>
         <div class="trustbar__item">
@@ -108,11 +112,7 @@
           <strong>KvK geregistreerd</strong>
           <span>Betrouwbaar &amp; transparant</span>
         </div>
-        <div class="trustbar__divider"></div>
-        <div class="trustbar__item">
-          <strong>4.9 / 5 ★</strong>
-          <span>Klantwaardering</span>
-        </div>
+
       </div>
     </section>
 
@@ -248,50 +248,7 @@
       </div>
     </section>
 
-    <!-- ===================== REVIEWS ===================== -->
-    <section class="section section--alt" id="reviews">
-      <div class="container">
-        <div class="section__header">
-          <span class="badge">Ervaringen</span>
-          <h2 class="section__title">Wat onze klanten zeggen</h2>
-        </div>
-        <div class="reviews__grid">
-          <div class="review-card">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">"Na jaren van vruchteloze pogingen met het IMG, heeft MijnbouwschadeHulp in drie maanden mijn aanvraag succesvol afgehandeld. Eindelijk rust!"</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">MV</div>
-              <div>
-                <strong>M. Visser</strong>
-                <span>Appingedam, Groningen</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card review-card--featured">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">"Persoonlijk contact, duidelijke uitleg en ze hebben écht voor ons gevochten. Uiteindelijk €12.400 vergoeding gekregen voor onze fundering. Aanrader!"</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">JK</div>
-              <div>
-                <strong>J. Kuiper</strong>
-                <span>Hoogezand, Groningen</span>
-              </div>
-            </div>
-          </div>
-          <div class="review-card">
-            <div class="review-card__stars">★★★★★</div>
-            <p class="review-card__text">"Ik dacht dat mijn situatie te ingewikkeld was. Het team heeft alles uitgezocht en ik hoefde alleen maar te tekenen. Super service!"</p>
-            <div class="review-card__author">
-              <div class="review-card__avatar">AT</div>
-              <div>
-                <strong>A. Terpstra</strong>
-                <span>Delfzijl, Groningen</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- ===================== FAQ ===================== -->
     <section class="section" id="faq">
@@ -365,7 +322,7 @@
               </li>
               <li>
                 <svg viewBox="0 0 20 20" fill="none"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293.293a1 1 0 000 1.414L10 11.414l4.707-4.707a1 1 0 00-1.414-1.414L10 8.586 6.707 5.293a1 1 0 00-1.414 0z" fill="currentColor"/></svg>
-                <span>info@joepdeschademan.nl</span>
+                <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94fdfaf2fbd4fefbf1e4f0f1e7f7fcf5f0f1f9f5fabafaf8">[email&#160;protected]</a></span>
               </li>
             </ul>
           </div>
@@ -402,6 +359,12 @@
             </div>
             <div class="form__group form__group--checkbox">
               <label class="checkbox-label">
+                <input type="checkbox" id="gebeld" name="gebeld" />
+                <span>Ik wil gebeld worden</span>
+              </label>
+            </div>
+            <div class="form__group form__group--checkbox">
+              <label class="checkbox-label">
                 <input type="checkbox" id="akkoord" name="akkoord" required />
                 <span>Ik ga akkoord met de <a href="privacy.html" target="_blank" class="link">privacyverklaring</a> *</span>
               </label>
@@ -427,7 +390,10 @@
       <div class="footer__brand">
         <a href="#" class="logo">
           <svg class="logo__icon" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#1a56db"/><path d="M10 28L20 12L30 28" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 22H26" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
-          <span class="logo__text">Mijnbouwschade<strong>Hulp</strong></span>
+          <span class="logo__text" style="display:flex;flex-direction:column;line-height:1.2;">
+            <span>Mijnbouwschade<strong>Hulp</strong></span>
+            <span style="font-size:0.7rem;color:rgba(255,255,255,.5);font-weight:700;">JoepdeSchademan</span>
+          </span>
         </a>
         <p>Wij staan voor u klaar bij uw schadeaanvraag voor mijnbouwschade. Betrouwbaar, persoonlijk en resultaatgericht.</p>
       </div>
@@ -454,7 +420,7 @@
       <div class="footer__contact">
         <h4>Contact</h4>
         <p>Groningen, Groningen</p>
-        <p><a href="mailto:info@joepdeschademan.nl">info@joepdeschademan.nl</a></p>
+        <p><a href="/cdn-cgi/l/email-protection#5e373038311e34313b2e3a3b2d3d363f3a3b333f30703032"><span class="__cf_email__" data-cfemail="4920272f260923262c392d2c3a2a21282d2c242827672725">[email&#160;protected]</span></a></p>
         <p class="footer__kvk">KvK: 74311131</p>
       </div>
     </div>
@@ -466,6 +432,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
 </body>
 </html>
