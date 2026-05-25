@@ -188,16 +188,39 @@
             <a href="#contact" class="btn btn--primary">Gratis intake aanvragen</a>
           </div>
           <div class="eligibility__map">
-            <div class="map-placeholder">
-              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="200" height="200" rx="16" fill="#eff6ff"/>
-                <path d="M60 80 Q80 60 100 75 Q120 90 140 70 L145 130 Q120 145 100 135 Q80 125 60 140 Z" fill="#1a56db" opacity="0.15" stroke="#1a56db" stroke-width="2"/>
-                <circle cx="100" cy="100" r="8" fill="#1a56db"/>
-                <circle cx="100" cy="100" r="16" fill="#1a56db" opacity="0.2"/>
-                <circle cx="100" cy="100" r="24" fill="#1a56db" opacity="0.1"/>
-                <text x="100" y="168" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#1a56db" font-weight="600">Mijnbouwgebied</text>
-              </svg>
-              <p>Groningen · Drenthe</p>
+            <!-- Interactive Google Map -->
+            <div id="eligibility-map">
+              <div class="map-loading-indicator" id="eligibility-map-loading">
+                <div class="map-spinner"></div>
+                <span>Kaart wordt geladen…</span>
+              </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="map-legend">
+              <span class="map-legend__title">Impactzones — klik op een gemeente voor meer informatie</span>
+              <div class="map-legend__item">
+                <span class="map-legend__swatch" style="background:#c0392b;"></span>
+                Kerngebied – hoge impact
+              </div>
+              <div class="map-legend__item">
+                <span class="map-legend__swatch" style="background:#d35400;"></span>
+                Middengebied – gemiddelde impact
+              </div>
+              <div class="map-legend__item">
+                <span class="map-legend__swatch" style="background:#b7770d;"></span>
+                Ruimer gebied – mogelijke impact
+              </div>
+            </div>
+
+            <!-- Zone info panel (shown on zone click) -->
+            <div id="zone-info">
+              <div class="zone-info__header">
+                <strong id="zone-info-name"></strong>
+                <button id="zone-info-close" aria-label="Sluiten">✕</button>
+              </div>
+              <p id="zone-info-desc"></p>
+              <a class="btn btn--primary" href="#contact" style="font-size:0.85rem;padding:8px 22px;align-self:flex-start;">Aanmelding starten</a>
             </div>
           </div>
         </div>
@@ -433,5 +456,182 @@
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+
+  <!-- ===================== GOOGLE MAPS – AARDBEVINGSGEBIED ===================== -->
+  <script>
+  const ZONES = [
+    {
+      name: "Loppersum",
+      level: "high",
+      color: "#c0392b",
+      fillOpacity: 0.35,
+      description: "Loppersum ligt in het hart van het aardbevingsgebied. Bewoners en eigenaren komen in aanmerking voor uitgebreide begeleiding bij schade en versterking.",
+      coords: [
+        {lat:53.338,lng:6.733},{lat:53.352,lng:6.780},{lat:53.365,lng:6.810},
+        {lat:53.350,lng:6.845},{lat:53.322,lng:6.855},{lat:53.300,lng:6.820},
+        {lat:53.295,lng:6.775},{lat:53.310,lng:6.735},{lat:53.338,lng:6.733}
+      ]
+    },
+    {
+      name: "Appingedam",
+      level: "high",
+      color: "#c0392b",
+      fillOpacity: 0.35,
+      description: "Appingedam behoort tot de zwaarst getroffen kernen. Alle bewoners en bedrijven komen in aanmerking voor onze gratis intake en begeleidingstraject.",
+      coords: [
+        {lat:53.318,lng:6.848},{lat:53.330,lng:6.870},{lat:53.340,lng:6.900},
+        {lat:53.325,lng:6.925},{lat:53.305,lng:6.920},{lat:53.295,lng:6.890},
+        {lat:53.295,lng:6.855},{lat:53.318,lng:6.848}
+      ]
+    },
+    {
+      name: "Ten Boer",
+      level: "high",
+      color: "#c0392b",
+      fillOpacity: 0.35,
+      description: "Ten Boer valt volledig binnen het kerngebied. Bewoners ervaren regelmatig schade door aardbevingen en kunnen een beroep doen op al onze diensten.",
+      coords: [
+        {lat:53.295,lng:6.703},{lat:53.310,lng:6.735},{lat:53.295,lng:6.775},
+        {lat:53.272,lng:6.780},{lat:53.258,lng:6.755},{lat:53.260,lng:6.710},
+        {lat:53.278,lng:6.695},{lat:53.295,lng:6.703}
+      ]
+    },
+    {
+      name: "Delfzijl",
+      level: "medium",
+      color: "#d35400",
+      fillOpacity: 0.30,
+      description: "Delfzijl valt in het middengebied. Bewoners en eigenaren die schade ondervinden van aardbevingen kunnen aanspraak maken op onze begeleiding.",
+      coords: [
+        {lat:53.340,lng:6.900},{lat:53.360,lng:6.930},{lat:53.360,lng:6.990},
+        {lat:53.340,lng:7.020},{lat:53.305,lng:7.010},{lat:53.295,lng:6.960},
+        {lat:53.305,lng:6.920},{lat:53.325,lng:6.925},{lat:53.340,lng:6.900}
+      ]
+    },
+    {
+      name: "Slochteren",
+      level: "medium",
+      color: "#d35400",
+      fillOpacity: 0.30,
+      description: "Slochteren (nu deel van Midden-Groningen) valt in het middengebied rondom het gasveld. Inwoners met schademeldingen komen in aanmerking.",
+      coords: [
+        {lat:53.225,lng:6.790},{lat:53.245,lng:6.830},{lat:53.258,lng:6.870},
+        {lat:53.240,lng:6.920},{lat:53.215,lng:6.910},{lat:53.200,lng:6.870},
+        {lat:53.200,lng:6.810},{lat:53.215,lng:6.780},{lat:53.225,lng:6.790}
+      ]
+    },
+    {
+      name: "Midden-Groningen",
+      level: "medium",
+      color: "#d35400",
+      fillOpacity: 0.30,
+      description: "De gemeente Midden-Groningen (Hoogezand-Sappemeer e.o.) bevindt zich in het middengebied. Bewoners kunnen aanmelden voor schade-intake.",
+      coords: [
+        {lat:53.175,lng:6.760},{lat:53.200,lng:6.810},{lat:53.200,lng:6.870},
+        {lat:53.180,lng:6.890},{lat:53.155,lng:6.880},{lat:53.145,lng:6.840},
+        {lat:53.150,lng:6.780},{lat:53.165,lng:6.755},{lat:53.175,lng:6.760}
+      ]
+    },
+    {
+      name: "Groningen (stad)",
+      level: "wider",
+      color: "#b7770d",
+      fillOpacity: 0.22,
+      description: "De stad Groningen valt gedeeltelijk in het ruimere effectgebied. Bewoners in de wijken Lewenborg, Beijum en Ten Boer kunnen een check aanvragen.",
+      coords: [
+        {lat:53.258,lng:6.520},{lat:53.280,lng:6.610},{lat:53.290,lng:6.680},
+        {lat:53.278,lng:6.695},{lat:53.260,lng:6.710},{lat:53.240,lng:6.710},
+        {lat:53.220,lng:6.690},{lat:53.210,lng:6.620},{lat:53.225,lng:6.555},
+        {lat:53.240,lng:6.520},{lat:53.258,lng:6.520}
+      ]
+    },
+    {
+      name: "Winsum",
+      level: "wider",
+      color: "#b7770d",
+      fillOpacity: 0.22,
+      description: "Winsum (nu Eemsdelta) grenst aan het kerngebied. Bewoners die aanwijsbare aardbevingsschade hebben kunnen een gratis intake aanvragen.",
+      coords: [
+        {lat:53.338,lng:6.590},{lat:53.360,lng:6.640},{lat:53.370,lng:6.695},
+        {lat:53.355,lng:6.730},{lat:53.338,lng:6.733},{lat:53.310,lng:6.735},
+        {lat:53.295,lng:6.703},{lat:53.290,lng:6.660},{lat:53.305,lng:6.615},
+        {lat:53.320,lng:6.590},{lat:53.338,lng:6.590}
+      ]
+    },
+    {
+      name: "Eemsdelta (Delfzijl-Noord)",
+      level: "wider",
+      color: "#b7770d",
+      fillOpacity: 0.22,
+      description: "Het noordelijk deel van Eemsdelta valt in het ruimere gebied. Bewoners met schade kunnen contact opnemen voor een vrijblijvende check.",
+      coords: [
+        {lat:53.360,lng:6.930},{lat:53.390,lng:6.950},{lat:53.410,lng:6.990},
+        {lat:53.400,lng:7.040},{lat:53.375,lng:7.050},{lat:53.355,lng:7.030},
+        {lat:53.340,lng:7.020},{lat:53.360,lng:6.990},{lat:53.360,lng:6.930}
+      ]
+    }
+  ];
+
+  function initMap() {
+    var loadingEl = document.getElementById('eligibility-map-loading');
+    if (loadingEl) loadingEl.style.display = 'none';
+
+    var map = new google.maps.Map(document.getElementById('eligibility-map'), {
+      center: { lat: 53.280, lng: 6.780 },
+      zoom: 11,
+      mapTypeId: 'roadmap',
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      zoomControl: true,
+      styles: [
+        { featureType:'poi', elementType:'labels', stylers:[{visibility:'off'}] },
+        { featureType:'transit', stylers:[{visibility:'off'}] },
+        { featureType:'water', elementType:'geometry', stylers:[{color:'#c9d8e8'}] },
+        { featureType:'landscape', elementType:'geometry', stylers:[{color:'#f0ece5'}] },
+        { featureType:'road', elementType:'geometry', stylers:[{color:'#ffffff'}] },
+        { featureType:'road', elementType:'labels.text.fill', stylers:[{color:'#888'}] },
+        { featureType:'administrative', elementType:'geometry.stroke', stylers:[{color:'#ccc'}] }
+      ]
+    });
+
+    ZONES.forEach(function(zone) {
+      var poly = new google.maps.Polygon({
+        paths: zone.coords,
+        strokeColor: zone.color,
+        strokeOpacity: 0.9,
+        strokeWeight: 1.5,
+        fillColor: zone.color,
+        fillOpacity: zone.fillOpacity,
+        map: map
+      });
+
+      poly.addListener('mouseover', function() {
+        poly.setOptions({ fillOpacity: zone.fillOpacity + 0.18, strokeWeight: 2.5 });
+      });
+      poly.addListener('mouseout', function() {
+        poly.setOptions({ fillOpacity: zone.fillOpacity, strokeWeight: 1.5 });
+      });
+
+      poly.addListener('click', function() {
+        var panel = document.getElementById('zone-info');
+        document.getElementById('zone-info-name').textContent = zone.name;
+        document.getElementById('zone-info-desc').textContent = zone.description;
+        panel.style.borderLeftColor = zone.color;
+        panel.classList.add('visible');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
+    document.getElementById('zone-info-close').addEventListener('click', function() {
+      document.getElementById('zone-info').classList.remove('visible');
+    });
+  }
+  </script>
+  <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBIahkOAHoC5fZPbGMQkT_Dim4yWP5sz0&callback=initMap&language=nl&region=NL">
+  </script>
 </body>
 </html>
