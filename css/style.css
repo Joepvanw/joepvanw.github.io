@@ -686,6 +686,11 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 
+/* Ronde swatch voor cirkels in legenda */
+.map-legend__swatch--circle {
+  border-radius: 50%;
+}
+
 /* Zone info panel */
 #zone-info {
   display: none;

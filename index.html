@@ -198,10 +198,18 @@
 
             <!-- Legend -->
             <div class="map-legend">
-              <span class="map-legend__title">Klik op het gebied voor meer informatie</span>
+              <span class="map-legend__title">Klik op een zone voor meer informatie</span>
               <div class="map-legend__item">
-                <span class="map-legend__swatch" style="background:#f5a742;"></span>
-                Aardbevingsgebied Groningen – kom ik in aanmerking?
+                <span class="map-legend__swatch" style="background:#fc6603;"></span>
+                Aardbevingsgebied – kom ik in aanmerking?
+              </div>
+              <div class="map-legend__item">
+                <span class="map-legend__swatch" style="background:#fc6603; opacity:0.4;"></span>
+                Randgebied (10 km omgeving) – mogelijk in aanmerking
+              </div>
+              <div class="map-legend__item">
+                <span class="map-legend__swatch map-legend__swatch--circle" style="background:#fc3103;"></span>
+                Bijzonder aandachtsgebied – Norg &amp; Grijpskerk (6 km)
               </div>
             </div>
 
@@ -451,32 +459,67 @@
 
   <!-- ===================== GOOGLE MAPS – AARDBEVINGSGEBIED ===================== -->
   <script>
-  // Één aaneengesloten polygoon: Leek → Roden → Assen → Winschoten →
-  // Eemshaven → Uithuizen → Pieterburen → Hornhuizen → Vierhuizen →
-  // Zoutkamp → Grijpskerk → Grootegast → Marum → Zevenhuizen → Leek
-  const ZONES = [
+  // ── Kleuren ────────────────────────────────────────────────
+  var MAIN_COLOR   = '#fc6603';   // hoofdpolygoon
+  var BUFFER_COLOR = '#fc6603';   // randgebied (transparanter)
+  var CIRCLE_COLOR = '#fc3103';   // Norg & Grijpskerk
+
+  // ── Hoofdpolygoon: Leek → Roden → Assen → Winschoten →
+  //    Eemshaven → Uithuizen → Pieterburen → Hornhuizen →
+  //    Vierhuizen → Zoutkamp → Grijpskerk → Grootegast →
+  //    Marum → Zevenhuizen → Leek ────────────────────────
+  var MAIN_COORDS = [
+    { lat: 53.162, lng: 6.392 },   // 1.  Leek
+    { lat: 53.139, lng: 6.428 },   // 2.  Roden
+    { lat: 52.993, lng: 6.564 },   // 3.  Assen
+    { lat: 53.144, lng: 7.039 },   // 4.  Winschoten
+    { lat: 53.434, lng: 6.834 },   // 5.  Eemshaven
+    { lat: 53.401, lng: 6.676 },   // 6.  Uithuizen
+    { lat: 53.403, lng: 6.503 },   // 7.  Pieterburen
+    { lat: 53.382, lng: 6.415 },   // 8.  Hornhuizen
+    { lat: 53.362, lng: 6.378 },   // 9.  Vierhuizen
+    { lat: 53.335, lng: 6.307 },   // 10. Zoutkamp
+    { lat: 53.262, lng: 6.294 },   // 11. Grijpskerk
+    { lat: 53.209, lng: 6.273 },   // 12. Grootegast
+    { lat: 53.146, lng: 6.261 },   // 13. Marum
+    { lat: 53.128, lng: 6.326 },   // 14. Zevenhuizen
+    { lat: 53.162, lng: 6.392 }    // 15. Leek (sluiting)
+  ];
+
+  // ── Randgebied: zelfde vorm, ~10 km naar buiten uitgebreid ──
+  // Centroïd: (53.250, 6.478). Elk hoekpunt is ~10 km van de
+  // centroïd af geschaald (factor = (d+10)/d per hoekpunt).
+  var BUFFER_COORDS = [
+    { lat: 53.084, lng: 6.316 },   // 1.  Leek buffer
+    { lat: 53.052, lng: 6.389 },   // 2.  Roden buffer
+    { lat: 52.905, lng: 6.594 },   // 3.  Assen buffer
+    { lat: 53.117, lng: 7.182 },   // 4.  Winschoten buffer
+    { lat: 53.493, lng: 6.948 },   // 5.  Eemshaven buffer
+    { lat: 53.472, lng: 6.769 },   // 6.  Uithuizen buffer
+    { lat: 53.493, lng: 6.518 },   // 7.  Pieterburen buffer
+    { lat: 53.469, lng: 6.374 },   // 8.  Hornhuizen buffer
+    { lat: 53.441, lng: 6.307 },   // 9.  Vierhuizen buffer
+    { lat: 53.392, lng: 6.192 },   // 10. Zoutkamp buffer
+    { lat: 53.272, lng: 6.145 },   // 11. Grijpskerk buffer
+    { lat: 53.181, lng: 6.131 },   // 12. Grootegast buffer
+    { lat: 53.090, lng: 6.144 },   // 13. Marum buffer
+    { lat: 53.056, lng: 6.236 },   // 14. Zevenhuizen buffer
+    { lat: 53.084, lng: 6.316 }    // 15. Leek buffer (sluiting)
+  ];
+
+  // ── Cirkels: Norg en Grijpskerk (straal 6 km) ───────────
+  var CIRCLES = [
     {
-      name: "Aardbevingsgebied Groningen",
-      color: "#f5a742",
-      fillOpacity: 0.32,
-      description: "Uw adres valt binnen het aangewezen aardbevingsgebied. Bewoners en eigenaren in dit gebied komen in aanmerking voor onze gratis begeleiding bij schade- en vergoedingentrajecten.",
-      coords: [
-        { lat: 53.162, lng: 6.392 },   // 1. Leek
-        { lat: 53.139, lng: 6.428 },   // 2. Roden
-        { lat: 52.993, lng: 6.564 },   // 3. Assen
-        { lat: 53.144, lng: 7.039 },   // 4. Winschoten
-        { lat: 53.434, lng: 6.834 },   // 5. Eemshaven
-        { lat: 53.401, lng: 6.676 },   // 6. Uithuizen
-        { lat: 53.403, lng: 6.503 },   // 7. Pieterburen
-        { lat: 53.382, lng: 6.415 },   // 8. Hornhuizen
-        { lat: 53.362, lng: 6.378 },   // 9. Vierhuizen
-        { lat: 53.335, lng: 6.307 },   // 10. Zoutkamp
-        { lat: 53.262, lng: 6.294 },   // 11. Grijpskerk
-        { lat: 53.209, lng: 6.273 },   // 12. Grootegast
-        { lat: 53.146, lng: 6.261 },   // 13. Marum
-        { lat: 53.128, lng: 6.326 },   // 14. Zevenhuizen
-        { lat: 53.162, lng: 6.392 }    // 15. Leek (sluiting)
-      ]
+      name: "Norg",
+      center: { lat: 53.069, lng: 6.462 },
+      radius: 6000,
+      description: "Norg valt binnen een bijzonder aandachtsgebied. Bewoners en eigenaren kunnen een gratis intake aanvragen om te bepalen of zij in aanmerking komen."
+    },
+    {
+      name: "Grijpskerk",
+      center: { lat: 53.262, lng: 6.294 },
+      radius: 6000,
+      description: "Grijpskerk valt binnen een bijzonder aandachtsgebied. Bewoners en eigenaren kunnen een gratis intake aanvragen om te bepalen of zij in aanmerking komen."
     }
   ];
 
@@ -503,37 +546,87 @@
       ]
     });
 
-    ZONES.forEach(function(zone) {
-      var poly = new google.maps.Polygon({
-        paths: zone.coords,
-        strokeColor: zone.color,
-        strokeOpacity: 0.9,
-        strokeWeight: 1.5,
-        fillColor: zone.color,
-        fillOpacity: zone.fillOpacity,
-        map: map
-      });
+    // 1. Teken randgebied eerst (achterste laag)
+    new google.maps.Polygon({
+      paths: BUFFER_COORDS,
+      strokeColor: BUFFER_COLOR,
+      strokeOpacity: 0.45,
+      strokeWeight: 1.5,
+      fillColor: BUFFER_COLOR,
+      fillOpacity: 0.10,
+      map: map,
+      clickable: true,
+      zIndex: 1
+    }).addListener('click', function() {
+      showZoneInfo(
+        'Randgebied (10 km omgeving)',
+        'Uw adres ligt in de directe omgeving van het aardbevingsgebied. Ook als u net buiten het kerngebied woont kunt u mogelijk aanspraak maken op begeleiding. Vraag een vrijblijvende intake aan.',
+        BUFFER_COLOR
+      );
+    });
 
-      poly.addListener('mouseover', function() {
-        poly.setOptions({ fillOpacity: zone.fillOpacity + 0.18, strokeWeight: 2.5 });
-      });
-      poly.addListener('mouseout', function() {
-        poly.setOptions({ fillOpacity: zone.fillOpacity, strokeWeight: 1.5 });
-      });
+    // 2. Teken hoofdpolygoon (boven het randgebied)
+    var mainPoly = new google.maps.Polygon({
+      paths: MAIN_COORDS,
+      strokeColor: MAIN_COLOR,
+      strokeOpacity: 0.9,
+      strokeWeight: 2,
+      fillColor: MAIN_COLOR,
+      fillOpacity: 0.32,
+      map: map,
+      zIndex: 2
+    });
+    mainPoly.addListener('mouseover', function() {
+      mainPoly.setOptions({ fillOpacity: 0.50, strokeWeight: 2.5 });
+    });
+    mainPoly.addListener('mouseout', function() {
+      mainPoly.setOptions({ fillOpacity: 0.32, strokeWeight: 2 });
+    });
+    mainPoly.addListener('click', function() {
+      showZoneInfo(
+        'Aardbevingsgebied Groningen',
+        'Uw adres valt binnen het aangewezen aardbevingsgebied. Bewoners en eigenaren in dit gebied komen in aanmerking voor onze gratis begeleiding bij schade- en vergoedingentrajecten.',
+        MAIN_COLOR
+      );
+    });
 
-      poly.addListener('click', function() {
-        var panel = document.getElementById('zone-info');
-        document.getElementById('zone-info-name').textContent = zone.name;
-        document.getElementById('zone-info-desc').textContent = zone.description;
-        panel.style.borderLeftColor = zone.color;
-        panel.classList.add('visible');
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // 3. Teken cirkels (Norg & Grijpskerk)
+    CIRCLES.forEach(function(c) {
+      var circle = new google.maps.Circle({
+        center: c.center,
+        radius: c.radius,
+        strokeColor: CIRCLE_COLOR,
+        strokeOpacity: 0.85,
+        strokeWeight: 2,
+        fillColor: CIRCLE_COLOR,
+        fillOpacity: 0.22,
+        map: map,
+        zIndex: 3
+      });
+      circle.addListener('mouseover', function() {
+        circle.setOptions({ fillOpacity: 0.38 });
+      });
+      circle.addListener('mouseout', function() {
+        circle.setOptions({ fillOpacity: 0.22 });
+      });
+      circle.addListener('click', function() {
+        showZoneInfo(c.name, c.description, CIRCLE_COLOR);
       });
     });
 
+    // Sluit info-paneel
     document.getElementById('zone-info-close').addEventListener('click', function() {
       document.getElementById('zone-info').classList.remove('visible');
     });
+  }
+
+  function showZoneInfo(name, desc, color) {
+    var panel = document.getElementById('zone-info');
+    document.getElementById('zone-info-name').textContent = name;
+    document.getElementById('zone-info-desc').textContent = desc;
+    panel.style.borderLeftColor = color;
+    panel.classList.add('visible');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
   </script>
   <script
