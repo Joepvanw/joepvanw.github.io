@@ -198,18 +198,10 @@
 
             <!-- Legend -->
             <div class="map-legend">
-              <span class="map-legend__title">Impactzones — klik op een gemeente voor meer informatie</span>
+              <span class="map-legend__title">Klik op het gebied voor meer informatie</span>
               <div class="map-legend__item">
-                <span class="map-legend__swatch" style="background:#c0392b;"></span>
-                Kerngebied – hoge impact
-              </div>
-              <div class="map-legend__item">
-                <span class="map-legend__swatch" style="background:#d35400;"></span>
-                Middengebied – gemiddelde impact
-              </div>
-              <div class="map-legend__item">
-                <span class="map-legend__swatch" style="background:#b7770d;"></span>
-                Ruimer gebied – mogelijke impact
+                <span class="map-legend__swatch" style="background:#f5a742;"></span>
+                Aardbevingsgebied Groningen – kom ik in aanmerking?
               </div>
             </div>
 
@@ -459,115 +451,31 @@
 
   <!-- ===================== GOOGLE MAPS – AARDBEVINGSGEBIED ===================== -->
   <script>
+  // Één aaneengesloten polygoon: Leek → Roden → Assen → Winschoten →
+  // Eemshaven → Uithuizen → Pieterburen → Hornhuizen → Vierhuizen →
+  // Zoutkamp → Grijpskerk → Grootegast → Marum → Zevenhuizen → Leek
   const ZONES = [
     {
-      name: "Loppersum",
-      level: "high",
-      color: "#c0392b",
-      fillOpacity: 0.35,
-      description: "Loppersum ligt in het hart van het aardbevingsgebied. Bewoners en eigenaren komen in aanmerking voor uitgebreide begeleiding bij schade en versterking.",
+      name: "Aardbevingsgebied Groningen",
+      color: "#f5a742",
+      fillOpacity: 0.32,
+      description: "Uw adres valt binnen het aangewezen aardbevingsgebied. Bewoners en eigenaren in dit gebied komen in aanmerking voor onze gratis begeleiding bij schade- en vergoedingentrajecten.",
       coords: [
-        {lat:53.338,lng:6.733},{lat:53.352,lng:6.780},{lat:53.365,lng:6.810},
-        {lat:53.350,lng:6.845},{lat:53.322,lng:6.855},{lat:53.300,lng:6.820},
-        {lat:53.295,lng:6.775},{lat:53.310,lng:6.735},{lat:53.338,lng:6.733}
-      ]
-    },
-    {
-      name: "Appingedam",
-      level: "high",
-      color: "#c0392b",
-      fillOpacity: 0.35,
-      description: "Appingedam behoort tot de zwaarst getroffen kernen. Alle bewoners en bedrijven komen in aanmerking voor onze gratis intake en begeleidingstraject.",
-      coords: [
-        {lat:53.318,lng:6.848},{lat:53.330,lng:6.870},{lat:53.340,lng:6.900},
-        {lat:53.325,lng:6.925},{lat:53.305,lng:6.920},{lat:53.295,lng:6.890},
-        {lat:53.295,lng:6.855},{lat:53.318,lng:6.848}
-      ]
-    },
-    {
-      name: "Ten Boer",
-      level: "high",
-      color: "#c0392b",
-      fillOpacity: 0.35,
-      description: "Ten Boer valt volledig binnen het kerngebied. Bewoners ervaren regelmatig schade door aardbevingen en kunnen een beroep doen op al onze diensten.",
-      coords: [
-        {lat:53.295,lng:6.703},{lat:53.310,lng:6.735},{lat:53.295,lng:6.775},
-        {lat:53.272,lng:6.780},{lat:53.258,lng:6.755},{lat:53.260,lng:6.710},
-        {lat:53.278,lng:6.695},{lat:53.295,lng:6.703}
-      ]
-    },
-    {
-      name: "Delfzijl",
-      level: "medium",
-      color: "#d35400",
-      fillOpacity: 0.30,
-      description: "Delfzijl valt in het middengebied. Bewoners en eigenaren die schade ondervinden van aardbevingen kunnen aanspraak maken op onze begeleiding.",
-      coords: [
-        {lat:53.340,lng:6.900},{lat:53.360,lng:6.930},{lat:53.360,lng:6.990},
-        {lat:53.340,lng:7.020},{lat:53.305,lng:7.010},{lat:53.295,lng:6.960},
-        {lat:53.305,lng:6.920},{lat:53.325,lng:6.925},{lat:53.340,lng:6.900}
-      ]
-    },
-    {
-      name: "Slochteren",
-      level: "medium",
-      color: "#d35400",
-      fillOpacity: 0.30,
-      description: "Slochteren (nu deel van Midden-Groningen) valt in het middengebied rondom het gasveld. Inwoners met schademeldingen komen in aanmerking.",
-      coords: [
-        {lat:53.225,lng:6.790},{lat:53.245,lng:6.830},{lat:53.258,lng:6.870},
-        {lat:53.240,lng:6.920},{lat:53.215,lng:6.910},{lat:53.200,lng:6.870},
-        {lat:53.200,lng:6.810},{lat:53.215,lng:6.780},{lat:53.225,lng:6.790}
-      ]
-    },
-    {
-      name: "Midden-Groningen",
-      level: "medium",
-      color: "#d35400",
-      fillOpacity: 0.30,
-      description: "De gemeente Midden-Groningen (Hoogezand-Sappemeer e.o.) bevindt zich in het middengebied. Bewoners kunnen aanmelden voor schade-intake.",
-      coords: [
-        {lat:53.175,lng:6.760},{lat:53.200,lng:6.810},{lat:53.200,lng:6.870},
-        {lat:53.180,lng:6.890},{lat:53.155,lng:6.880},{lat:53.145,lng:6.840},
-        {lat:53.150,lng:6.780},{lat:53.165,lng:6.755},{lat:53.175,lng:6.760}
-      ]
-    },
-    {
-      name: "Groningen (stad)",
-      level: "wider",
-      color: "#b7770d",
-      fillOpacity: 0.22,
-      description: "De stad Groningen valt gedeeltelijk in het ruimere effectgebied. Bewoners in de wijken Lewenborg, Beijum en Ten Boer kunnen een check aanvragen.",
-      coords: [
-        {lat:53.258,lng:6.520},{lat:53.280,lng:6.610},{lat:53.290,lng:6.680},
-        {lat:53.278,lng:6.695},{lat:53.260,lng:6.710},{lat:53.240,lng:6.710},
-        {lat:53.220,lng:6.690},{lat:53.210,lng:6.620},{lat:53.225,lng:6.555},
-        {lat:53.240,lng:6.520},{lat:53.258,lng:6.520}
-      ]
-    },
-    {
-      name: "Winsum",
-      level: "wider",
-      color: "#b7770d",
-      fillOpacity: 0.22,
-      description: "Winsum (nu Eemsdelta) grenst aan het kerngebied. Bewoners die aanwijsbare aardbevingsschade hebben kunnen een gratis intake aanvragen.",
-      coords: [
-        {lat:53.338,lng:6.590},{lat:53.360,lng:6.640},{lat:53.370,lng:6.695},
-        {lat:53.355,lng:6.730},{lat:53.338,lng:6.733},{lat:53.310,lng:6.735},
-        {lat:53.295,lng:6.703},{lat:53.290,lng:6.660},{lat:53.305,lng:6.615},
-        {lat:53.320,lng:6.590},{lat:53.338,lng:6.590}
-      ]
-    },
-    {
-      name: "Eemsdelta (Delfzijl-Noord)",
-      level: "wider",
-      color: "#b7770d",
-      fillOpacity: 0.22,
-      description: "Het noordelijk deel van Eemsdelta valt in het ruimere gebied. Bewoners met schade kunnen contact opnemen voor een vrijblijvende check.",
-      coords: [
-        {lat:53.360,lng:6.930},{lat:53.390,lng:6.950},{lat:53.410,lng:6.990},
-        {lat:53.400,lng:7.040},{lat:53.375,lng:7.050},{lat:53.355,lng:7.030},
-        {lat:53.340,lng:7.020},{lat:53.360,lng:6.990},{lat:53.360,lng:6.930}
+        { lat: 53.162, lng: 6.392 },   // 1. Leek
+        { lat: 53.139, lng: 6.428 },   // 2. Roden
+        { lat: 52.993, lng: 6.564 },   // 3. Assen
+        { lat: 53.144, lng: 7.039 },   // 4. Winschoten
+        { lat: 53.434, lng: 6.834 },   // 5. Eemshaven
+        { lat: 53.401, lng: 6.676 },   // 6. Uithuizen
+        { lat: 53.403, lng: 6.503 },   // 7. Pieterburen
+        { lat: 53.382, lng: 6.415 },   // 8. Hornhuizen
+        { lat: 53.362, lng: 6.378 },   // 9. Vierhuizen
+        { lat: 53.335, lng: 6.307 },   // 10. Zoutkamp
+        { lat: 53.262, lng: 6.294 },   // 11. Grijpskerk
+        { lat: 53.209, lng: 6.273 },   // 12. Grootegast
+        { lat: 53.146, lng: 6.261 },   // 13. Marum
+        { lat: 53.128, lng: 6.326 },   // 14. Zevenhuizen
+        { lat: 53.162, lng: 6.392 }    // 15. Leek (sluiting)
       ]
     }
   ];
@@ -577,8 +485,8 @@
     if (loadingEl) loadingEl.style.display = 'none';
 
     var map = new google.maps.Map(document.getElementById('eligibility-map'), {
-      center: { lat: 53.280, lng: 6.780 },
-      zoom: 11,
+      center: { lat: 53.210, lng: 6.650 },
+      zoom: 9,
       mapTypeId: 'roadmap',
       mapTypeControl: false,
       streetViewControl: false,
