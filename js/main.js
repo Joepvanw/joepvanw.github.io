@@ -196,11 +196,13 @@ form.addEventListener('submit', async (e) => {
       formSuccess.classList.add('visible');
       formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
+      console.error('Web3Forms error:', json);
       submitBtn.disabled = false;
       submitBtn.textContent = 'Gratis intake aanvragen';
-      alert('Er ging iets mis. Probeer het opnieuw of stuur een e-mail naar info@joepdeschademan.nl');
+      alert(`Er ging iets mis (${json.message || 'onbekende fout'}). Probeer het opnieuw of stuur een e-mail naar info@joepdeschademan.nl`);
     }
-  } catch {
+  } catch (err) {
+    console.error('Web3Forms request failed:', err);
     submitBtn.disabled = false;
     submitBtn.textContent = 'Gratis intake aanvragen';
     alert('Er ging iets mis. Controleer uw internetverbinding en probeer het opnieuw.');
