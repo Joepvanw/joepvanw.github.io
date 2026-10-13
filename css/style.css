@@ -382,8 +382,8 @@ ul { list-style: none; }
    the margin beside the container, so it can be wider without squeezing the text */
 @media (min-width: 1025px) {
   .hero__form-wrap {
-    margin-left: 20px;
-    margin-right: calc(-1 * clamp(0px, (100vw - 1180px) / 2, 100px));
+    margin-left: 45px;
+    margin-right: calc(-1 * clamp(0px, (100vw - 1180px) / 2 + 20px, 150px));
   }
 }
 
