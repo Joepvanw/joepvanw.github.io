@@ -378,7 +378,15 @@ ul { list-style: none; }
   gap: 180px;
 }
 
-/* Hero intake form */
+/* Hero intake form: on wide screens it sits further right and spills into
+   the margin beside the container, so it can be wider without squeezing the text */
+@media (min-width: 1025px) {
+  .hero__form-wrap {
+    margin-left: 20px;
+    margin-right: calc(-1 * clamp(0px, (100vw - 1180px) / 2, 100px));
+  }
+}
+
 .hero__form-wrap .contact__form {
   padding: 32px 32px 28px;
   gap: 16px;
