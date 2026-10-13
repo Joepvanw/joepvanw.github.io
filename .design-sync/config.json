@@ -1,0 +1,58 @@
+{
+  "projectId": "c3d003cb-f337-4e3a-8053-7a6753a7e522",
+  "shape": "package",
+  "pkg": "joepdeschademan",
+  "globalName": "JoepDeSchadeMan",
+  "entry": ".design-sync/kit/dist/index.js",
+  "buildCmd": "cd .design-sync/kit && npm ci && npm run build",
+  "cssEntry": "dist/style.css",
+  "overrides": {
+    "Button": {
+      "cardMode": "column"
+    },
+    "FaqItem": {
+      "cardMode": "column"
+    },
+    "MapLegend": {
+      "cardMode": "column"
+    },
+    "ReviewCard": {
+      "cardMode": "column"
+    },
+    "ReviewsGrid": {
+      "cardMode": "column",
+      "viewport": "1280x520"
+    },
+    "ServiceCard": {
+      "cardMode": "column"
+    },
+    "ServicesGrid": {
+      "cardMode": "column",
+      "viewport": "1280x900"
+    },
+    "TextField": {
+      "cardMode": "column"
+    },
+    "Footer": {
+      "cardMode": "column",
+      "viewport": "1280x560"
+    },
+    "Header": {
+      "cardMode": "column",
+      "viewport": "1280x320"
+    },
+    "Hero": {
+      "cardMode": "column",
+      "viewport": "1280x1500"
+    },
+    "Section": {
+      "cardMode": "column",
+      "viewport": "1280x1100"
+    },
+    "TrustBar": {
+      "cardMode": "column",
+      "viewport": "1280x240"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!--
+  PROTOTYPE — throwaway. Not linked from the live site; lives on branch prototype/homepage-varianten.
+  Question: what should the homepage look like, given the competitor research
+  (kompax.nl, tdvadviseert.nl, hvsadvies.nl, hulpbijmijnbouwschade.nl)?
+  Three structurally different homepage variants on one page, switchable via ?variant=A|B|C
+  and the floating bar at the bottom (← / → keys work too).
+    A — Persoonlijk:   Joep as the face, callback form in the hero, sticky call/WhatsApp bar
+    B — Keuzehulp:     "Wat is uw situatie?" picker → 3-question check → route advice + deadline + prefilled form
+    C — Transparant:   routes-and-fees table, fee calculator, deadline timeline, cases
+  Yellow dashed text = placeholder content (photo, reviews, numbers, fee %, deadlines) that Joep must fill in or verify.
+  Forms are stubs: nothing is sent.
+  Run: python3 -m http.server 8000  →  http://localhost:8000/prototype-homepage.html?variant=A
+-->
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>PROTOTYPE — Homepage varianten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/prototype-homepage.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER (shared, from index.html) ===================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">
+        <svg class="logo__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#1a56db"/>
+          <path d="M10 28L20 12L30 28" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 22H26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="logo__text" style="display:flex;flex-direction:column;line-height:1.2;">
+          <span>Mijnbouwschade<strong>Hulp</strong></span>
+          <span style="font-size:0.8rem;color:var(--color-text-muted);font-weight:800;">JoepDeSchademan</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#pv-hulp" class="nav__link">Waarmee ik help</a></li>
+          <li><a href="#pv-kosten" class="nav__link">Kosten</a></li>
+          <li><a href="#pv-faq" class="nav__link">FAQ</a></li>
+          <li><a href="tel:+31611479164" class="nav__link pv-nav-phone">📞 06 1147 9164</a></li>
+          <li><a href="#pv-contact" class="nav__link nav__link--cta">Gratis intake</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu openen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- =====================================================================
+       VARIANT A — PERSOONLIJK
+       Primary affordance: callback form above the fold, Joep as the face.
+       ===================================================================== -->
+  <div class="pv" data-variant="A" data-name="Persoonlijk — Joep aan de keukentafel" hidden>
+
+    <section class="pva-hero">
+      <div class="container pva-hero__inner">
+        <div class="pva-hero__text">
+          <p class="pva-kicker">Mijnbouwschade in Groningen &amp; Drenthe</p>
+          <h1 class="pva-hero__title">Scheuren in uw huis?<br>Ik regel het IMG voor u.</h1>
+          <p class="pva-hero__sub">Ik ben Joep. Ik kom bij u aan de keukentafel, kijk naar de schade en neem het hele traject met het IMG van u over. U hoeft zelf niets uit te zoeken.</p>
+          <ul class="pva-proof">
+            <li><strong>€0 vooraf</strong><span>no cure, no pay</span></li>
+            <li><strong>Binnen 2 weken</strong><span>bij u thuis</span></li>
+            <li><strong>Eén vast aanspreekpunt</strong><span>geen callcenter</span></li>
+          </ul>
+          <div class="pva-direct">
+            <a class="pva-direct__btn" href="tel:+31611479164">📞 Bel Joep: 06 1147 9164</a>
+            <a class="pva-direct__btn pva-direct__btn--wa" href="https://wa.me/31611479164" target="_blank" rel="noopener">💬 WhatsApp</a>
+          </div>
+        </div>
+
+        <form class="pva-callback pv-stub-form" novalidate>
+          <div class="pva-callback__who">
+            <div class="pva-avatar" aria-hidden="true">J</div>
+            <div>
+              <strong>Joep belt u terug</strong>
+              <span>Binnen 1 werkdag · vrijblijvend</span>
+            </div>
+          </div>
+          <label>Naam<input name="naam" required></label>
+          <label>Telefoonnummer<input name="tel" type="tel" required></label>
+          <div class="pv-row">
+            <label>Postcode<input name="postcode" required></label>
+            <label>Huisnr.<input name="huisnr" required></label>
+          </div>
+          <button class="btn btn--primary btn--full btn--lg" type="submit">Bel mij terug</button>
+          <p class="pva-callback__fine">Geen verplichtingen. Uw gegevens gebruik ik alleen om u te bellen.</p>
+          <p class="pv-stub-msg" hidden>✓ (prototype) Bedankt — Joep belt u binnen 1 werkdag.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="pv-hulp">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">Herkenbaar?</span>
+          <h2 class="section__title">U wilt gewoon dat uw huis goed wordt hersteld</h2>
+        </div>
+        <div class="pva-pains">
+          <div><h3>“Ik snap de brieven van het IMG niet.”</h3><p>Vaste vergoeding, maatwerk, zienswijze… Ik leg het in gewone taal uit en kies samen met u de route die het meeste oplevert.</p></div>
+          <div><h3>“Het rapport klopt niet.”</h3><p>Schades worden vaak gemist bij de opname. Ik loop het rapport na en schrijf de zienswijze of het bezwaar.</p></div>
+          <div><h3>“Ik heb er de tijd en energie niet voor.”</h3><p>Ik neem alle communicatie over. U hoort van mij als er iets te beslissen valt.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container pva-about">
+        <div class="pva-about__photo"><mark class="ph">Echte foto van Joep bij een Groningse woning</mark></div>
+        <div>
+          <span class="badge">Over mij</span>
+          <h2 class="section__title">Ik ben Joep, uw vaste aanspreekpunt</h2>
+          <p><mark class="ph">2–3 zinnen: waar Joep vandaan komt, hoe lang hij dit doet, waarom hij dit werk doet.</mark></p>
+          <p>U spreekt van begin tot eind met mij — geen wisselende behandelaars, geen callcenter. Ik werk alleen aan mijnbouwschade, niets anders.</p>
+          <a class="btn btn--outline" href="tel:+31611479164">Bel mij direct</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">Ervaringen</span>
+          <h2 class="section__title">Wat bewoners zeggen</h2>
+        </div>
+        <div class="reviews__grid">
+          <div class="review-card"><div class="review-card__stars">★★★★★</div><p class="review-card__text"><mark class="ph">Echte Google-review hier</mark></p><div class="review-card__author"><div class="review-card__avatar">?</div><div><strong><mark class="ph">Voornaam</mark></strong><span><mark class="ph">Dorp</mark></span></div></div></div>
+          <div class="review-card review-card--featured"><div class="review-card__stars">★★★★★</div><p class="review-card__text"><mark class="ph">Echte Google-review hier</mark></p><div class="review-card__author"><div class="review-card__avatar">?</div><div><strong><mark class="ph">Voornaam</mark></strong><span><mark class="ph">Dorp</mark></span></div></div></div>
+          <div class="review-card"><div class="review-card__stars">★★★★★</div><p class="review-card__text"><mark class="ph">Echte Google-review hier</mark></p><div class="review-card__author"><div class="review-card__avatar">?</div><div><strong><mark class="ph">Voornaam</mark></strong><span><mark class="ph">Dorp</mark></span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="pv-kosten">
+      <div class="container pva-steps">
+        <div><span class="pva-steps__n">1</span><h3>U belt of laat u terugbellen</h3><p>Kort gesprek: wat is er aan de hand?</p></div>
+        <div><span class="pva-steps__n">2</span><h3>Ik kom langs</h3><p>Binnen 2 weken, aan de keukentafel.</p></div>
+        <div><span class="pva-steps__n">3</span><h3>Ik regel het met het IMG</h3><p>Dossier, rapport, zienswijze, bezwaar.</p></div>
+        <div><span class="pva-steps__n">4</span><h3>U ontvangt uw vergoeding</h3><p>Pas dan betaalt u <mark class="ph">XX%</mark>. Geen resultaat = €0.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="pv-faq">
+      <div class="container">
+        <div class="section__header"><h2 class="section__title">Veelgestelde vragen</h2></div>
+        <div class="faq__list">
+          <div class="faq__item"><button class="faq__question" aria-expanded="false">Waarom niet zelf naar het IMG?<svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><div class="faq__answer"><p>Dat kan zeker. Maar schades worden vaak gemist bij de opname, en de keuze tussen vaste vergoeding en maatwerk is lastig. Ik ken de regels en zie wat er gemist wordt — en omdat ik pas verdien als u meer krijgt, zit ik aan uw kant.</p></div></div>
+          <div class="faq__item"><button class="faq__question" aria-expanded="false">Wat kost het?<svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><div class="faq__answer"><p>Niets vooraf. Pas na uitbetaling <mark class="ph">XX% over …</mark>. Krijgt u niets, dan betaalt u niets.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="pv-contact">
+      <div class="container pva-closing">
+        <div class="pva-avatar pva-avatar--lg" aria-hidden="true">J</div>
+        <h2 class="section__title section__title--light">Liever eerst even bellen?</h2>
+        <p>Ik neem zelf op. Lukt het niet direct, dan bel ik u dezelfde dag terug.</p>
+        <div class="pva-direct pva-direct--center">
+          <a class="pva-direct__btn" href="tel:+31611479164">📞 06 1147 9164</a>
+          <a class="pva-direct__btn pva-direct__btn--wa" href="https://wa.me/31611479164" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky mobile action bar + desktop WhatsApp bubble -->
+    <div class="pva-sticky">
+      <a href="tel:+31611479164">📞 Bellen</a>
+      <a href="https://wa.me/31611479164" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a href="#" class="pva-sticky__cta" data-scroll-top>Terugbellen</a>
+    </div>
+    <a class="pva-wa-bubble" href="https://wa.me/31611479164" target="_blank" rel="noopener" aria-label="WhatsApp Joep">💬</a>
+  </div>
+
+  <!-- =====================================================================
+       VARIANT B — KEUZEHULP
+       Primary affordance: situation picker in the hero → guided check.
+       ===================================================================== -->
+  <div class="pv" data-variant="B" data-name="Keuzehulp — Wat is uw situatie?" hidden>
+
+    <section class="pvb-hero">
+      <div class="container">
+        <p class="pvb-hero__eyebrow">Gratis check · 1 minuut · no cure, no pay</p>
+        <h1 class="pvb-hero__title">Mijnbouwschade? <span class="text-accent">Wat is uw situatie?</span></h1>
+        <p class="pvb-hero__sub">Kies wat het beste past. U krijgt direct te zien welke route bij u past, of er een termijn loopt, en wat het kost.</p>
+
+        <div class="pvb-tiles" id="pvbTiles">
+          <button class="pvb-tile" data-situatie="nieuw"><span>🏚️</span>Ik heb schade en heb nog niets gemeld</button>
+          <button class="pvb-tile" data-situatie="rapport"><span>📄</span>Ik heb een adviesrapport ontvangen en ben het er niet mee eens</button>
+          <button class="pvb-tile" data-situatie="besluit"><span>⚖️</span>Ik heb een besluit van het IMG en wil bezwaar maken</button>
+          <button class="pvb-tile" data-situatie="vast"><span>💶</span>Vaste vergoeding of maatwerk — wat moet ik kiezen?</button>
+          <button class="pvb-tile" data-situatie="afgewezen"><span>❌</span>Mijn schade is eerder afgewezen</button>
+          <button class="pvb-tile" data-situatie="anders"><span>💬</span>Iets anders / ik weet het niet</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="pvb-check" id="pvbCheck" hidden>
+      <div class="container pvb-check__inner">
+        <div class="pvb-panel">
+          <div class="pvb-progress"><span id="pvbProgress"></span></div>
+          <div id="pvbStep"></div>
+        </div>
+        <aside class="pvb-state">
+          <h4>Uw antwoorden</h4>
+          <dl id="pvbState"></dl>
+          <button class="pvb-reset" id="pvbReset" type="button">↺ Opnieuw beginnen</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="pv-hulp">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">De routes bij het IMG</span>
+          <h2 class="section__title">Welke route past bij u?</h2>
+          <p class="section__subtitle">Geen idee? Doe hierboven de check, of bel even: <a class="link" href="tel:+31611479164">06 1147 9164</a>.</p>
+        </div>
+        <div class="pvb-routes">
+          <article><h3>Vaste vergoeding</h3><p>Eenmalig bedrag, tot €10.000, zonder uitgebreide opname. Snel, maar soms te laag.</p></article>
+          <article><h3>Maatwerk</h3><p>Volledige schade-opname. Kost meer tijd, levert bij veel schade vaak meer op.</p></article>
+          <article><h3>Zienswijze</h3><p>Reactie op het adviesrapport vóór het besluit. Hier wordt het verschil gemaakt.</p></article>
+          <article><h3>Bezwaar</h3><p>Niet eens met het besluit? Dan maken we bezwaar, met een contra-expertise.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="pv-faq">
+      <div class="container pvb-split">
+        <div>
+          <h2 class="section__title">Waarom eerst de check?</h2>
+          <p>Elke situatie vraagt iets anders. Iemand met een rapport in de bus heeft haast; iemand die nog moet melden kan rustig de beste route kiezen. De check zorgt dat Joep bij het eerste gesprek al weet waar u staat.</p>
+        </div>
+        <ul class="checklist">
+          <li class="checklist__item checklist__item--check">Gratis en vrijblijvend</li>
+          <li class="checklist__item checklist__item--check">Direct zien of er een termijn loopt</li>
+          <li class="checklist__item checklist__item--check">IMG-rapport meesturen kan, hoeft niet</li>
+          <li class="checklist__item checklist__item--check">Joep reageert binnen 1 werkdag</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- =====================================================================
+       VARIANT C — TRANSPARANT
+       Primary affordance: open fees + calculator; proof over persuasion.
+       ===================================================================== -->
+  <div class="pv" data-variant="C" data-name="Transparant — alles op tafel" hidden>
+
+    <section class="pvc-hero">
+      <div class="container">
+        <span class="badge">Mijnbouwschade · Groningen &amp; Drenthe</span>
+        <h1 class="pvc-hero__title">Wat levert hulp op, wat kost het,<br>en wanneer moet u iets doen?</h1>
+        <p class="pvc-hero__sub">Geen verkooppraatje. Hieronder staat per IMG-route wat ik doe, wat u betaalt en welke termijnen er gelden.</p>
+        <div class="pvc-stats">
+          <div><strong><mark class="ph">120+</mark></strong><span>dossiers begeleid</span></div>
+          <div><strong><mark class="ph">€1,2 mln</mark></strong><span>extra vergoeding voor bewoners</span></div>
+          <div><strong>€0</strong><span>vooraf — no cure, no pay</span></div>
+          <div><strong>2 wkn</strong><span>tot huisbezoek</span></div>
+        </div>
+        <div class="hero__actions">
+          <a class="btn btn--primary btn--lg" href="#pv-kosten">Bekijk tarieven per route</a>
+          <a class="btn btn--outline btn--lg" href="#pv-contact">Gratis intake</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pv-kosten">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">Tarieven</span>
+          <h2 class="section__title">Per route: wat ik doe en wat u betaalt</h2>
+        </div>
+        <div class="pvc-table-wrap">
+          <table class="pvc-table">
+            <thead><tr><th></th><th>Vaste vergoeding</th><th>Maatwerk</th><th>Zienswijze</th><th>Bezwaar</th></tr></thead>
+            <tbody>
+              <tr><th>Voor wie</th><td>Beperkte schade, snel geld</td><td>Veel of complexe schade</td><td>Adviesrapport ontvangen, klopt niet</td><td>Besluit ontvangen, niet eens</td></tr>
+              <tr><th>Wat ik doe</th><td>Check of maatwerk meer oplevert, aanvraag indienen</td><td>Hele traject: opname, rapport, onderhandeling</td><td>Rapport nalopen, zienswijze schrijven</td><td>Bezwaarschrift + contra-expertise</td></tr>
+              <tr><th>Wat u betaalt</th><td><mark class="ph">€… vast of XX%</mark></td><td><mark class="ph">XX%</mark> no cure no pay</td><td><mark class="ph">Vergoed door IMG?</mark></td><td><mark class="ph">Vergoed door IMG?</mark></td></tr>
+              <tr><th>Termijn</th><td>—</td><td>—</td><td><mark class="ph">± 2 weken na rapport</mark></td><td><mark class="ph">± 6 weken na besluit</mark></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="pvc-note">Het percentage berekent u over <mark class="ph">het bedrag dat u ontvangt / alleen het extra bedrag</mark>. Geen resultaat = €0. Geen verborgen kosten.</p>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container pvc-calc">
+        <div>
+          <span class="badge">Rekenvoorbeeld</span>
+          <h2 class="section__title">Wat houdt u over?</h2>
+          <p>Schuif om te zien wat u betaalt. Het tarief hier is een <mark class="ph">voorbeeldpercentage</mark>.</p>
+          <label class="pvc-calc__label">Vergoeding van het IMG: <strong id="pvcAmount"></strong>
+            <input type="range" id="pvcRange" min="2000" max="80000" step="1000" value="25000">
+          </label>
+          <label class="pvc-calc__label">Tarief: <strong id="pvcPctLabel"></strong>
+            <input type="range" id="pvcPct" min="5" max="20" step="1" value="15">
+          </label>
+        </div>
+        <div class="pvc-calc__result">
+          <div class="pvc-bar"><span id="pvcBarKeep"></span><span id="pvcBarFee"></span></div>
+          <dl>
+            <div><dt>U ontvangt</dt><dd id="pvcKeep"></dd></div>
+            <div><dt>Mijn fee</dt><dd id="pvcFee"></dd></div>
+            <div><dt>Geen resultaat</dt><dd>€0</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">Termijnen</span>
+          <h2 class="section__title">Hier gaat het vaak mis</h2>
+          <p class="section__subtitle">De termijnen bij het IMG zijn kort. Wie te laat reageert, verliest zijn kans.</p>
+        </div>
+        <ol class="pvc-timeline">
+          <li><strong>Melding</strong><span>U meldt de schade bij het IMG</span></li>
+          <li><strong>Opname</strong><span>Een deskundige bekijkt de schade</span></li>
+          <li class="is-hot"><strong>Adviesrapport</strong><span>Zienswijze binnen <mark class="ph">± 2 weken</mark></span></li>
+          <li><strong>Besluit</strong><span>Het IMG beslist</span></li>
+          <li class="is-hot"><strong>Bezwaar</strong><span>Binnen <mark class="ph">± 6 weken</mark></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="pv-hulp">
+      <div class="container">
+        <div class="section__header"><span class="badge">Voorbeelden</span><h2 class="section__title">Wat een tweede blik opleverde</h2></div>
+        <div class="pvc-cases">
+          <article><span class="pvc-cases__place"><mark class="ph">Loppersum</mark> · maatwerk</span><p class="pvc-cases__nums"><s><mark class="ph">€6.000</mark></s> → <strong><mark class="ph">€19.500</mark></strong></p><p>Gemiste scheuren in de fundering alsnog meegenomen via zienswijze.</p></article>
+          <article><span class="pvc-cases__place"><mark class="ph">Garrelsweer</mark> · bezwaar</span><p class="pvc-cases__nums"><s><mark class="ph">€0</mark></s> → <strong><mark class="ph">€8.200</mark></strong></p><p>Afgewezen schade, na contra-expertise toch toegekend.</p></article>
+          <article><span class="pvc-cases__place"><mark class="ph">Assen</mark> · vaste vergoeding</span><p class="pvc-cases__nums"><s><mark class="ph">€5.000</mark></s> → <strong><mark class="ph">€10.000</mark></strong></p><p>Aanvulling op eerdere vaste vergoeding.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pv-faq">
+      <div class="container">
+        <div class="section__header"><h2 class="section__title">Eerlijke antwoorden</h2></div>
+        <div class="faq__list">
+          <div class="faq__item"><button class="faq__question" aria-expanded="false">Is dit niet gewoon een claimbureau?<svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><div class="faq__answer"><p>Ik werk voor u, niet voor het IMG. Als hulp u niets oplevert, zeg ik dat eerlijk — en dan betaalt u niets.</p></div></div>
+          <div class="faq__item"><button class="faq__question" aria-expanded="false">Waarom niet zelf naar het IMG?<svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><div class="faq__answer"><p>Kan prima bij eenvoudige schade. Bij twijfel over het rapport of de route levert een tweede blik vaak meer op dan het kost.</p></div></div>
+          <div class="faq__item"><button class="faq__question" aria-expanded="false">Ik ben niet het IMG — wat is het verschil?<svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><div class="faq__answer"><p>Het IMG beoordeelt en betaalt uw schade. Ik ben een onafhankelijke adviseur die namens u het IMG-traject doorloopt.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark" id="pv-contact">
+      <div class="container contact__inner">
+        <div class="contact__info">
+          <h2 class="section__title section__title--light">Gratis intake</h2>
+          <p class="contact__subtitle">U hoort binnen 1 werkdag van mij. Liever bellen? <a href="tel:+31611479164" style="text-decoration:underline">06 1147 9164</a></p>
+        </div>
+        <form class="contact__form pv-stub-form" novalidate>
+          <div class="form__row">
+            <div class="form__group"><label>Naam *</label><input required></div>
+            <div class="form__group"><label>Telefoon *</label><input type="tel" required></div>
+          </div>
+          <div class="form__row">
+            <div class="form__group"><label>Postcode *</label><input required></div>
+            <div class="form__group"><label>Huisnummer *</label><input required></div>
+          </div>
+          <div class="form__group"><label>IMG-rapport of besluit (optioneel)</label><input type="file" accept=".pdf,image/*"></div>
+          <button type="submit" class="btn btn--primary btn--full btn--lg">Gratis intake aanvragen</button>
+          <p class="pv-stub-msg" hidden>✓ (prototype) Aanvraag zou nu verstuurd worden.</p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  </main>
+
+  <!-- ===================== FOOTER (shared, from index.html) ===================== -->
+  <footer class="footer">
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 MijnbouwschadeHulp · KvK 74311131 · <a href="tel:+31611479164">06 1147 9164</a> · <a href="mailto:info@joepdeschademan.nl">info@joepdeschademan.nl</a></p>
+        <p>Onafhankelijk adviseur — niet verbonden aan het IMG</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== PROTOTYPE SWITCHER ===================== -->
+  <div class="pv-switcher" id="pvSwitcher" hidden>
+    <button type="button" id="pvPrev" aria-label="Vorige variant">←</button>
+    <span id="pvLabel"></span>
+    <button type="button" id="pvNext" aria-label="Volgende variant">→</button>
+  </div>
+
+  <script src="js/prototype-homepage.js"></script>
+</body>
+</html>

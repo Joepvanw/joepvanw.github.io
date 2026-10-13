@@ -1,0 +1,24 @@
+{
+  "name": "joepdeschademan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React wrappers around the JoepDeSchadeMan / MijnbouwschadeHulp site's BEM markup (css/style.css). Used by /design-sync to publish the site as a Claude Design design system.",
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "style": "dist/style.css",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "esbuild": "^0.24.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.0"
+  }
+}
