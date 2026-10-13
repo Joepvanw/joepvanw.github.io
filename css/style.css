@@ -354,6 +354,33 @@ ul { list-style: none; }
   flex-wrap: wrap;
 }
 
+/* Hero tear (drawn by js/hero-tear.js) */
+.hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__tear {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hero--tremble {
+  animation: hero-tremble .5s ease-out;
+}
+
+@keyframes hero-tremble {
+  0%, 100% { transform: none; }
+  15%      { transform: translate(-3px, 2px) rotate(-.15deg); }
+  30%      { transform: translate(3px, -2px); }
+  45%      { transform: translate(-2px, 1px) rotate(.1deg); }
+  65%      { transform: translate(1px, -1px); }
+  80%      { transform: translate(-1px, 0); }
+}
+
 /* Hero Visual (floating stat cards) */
 .hero__visual {
   position: relative;
