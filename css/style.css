@@ -242,6 +242,21 @@ ul { list-style: none; }
   background: var(--color-primary-light);
 }
 
+.nav__link--whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.nav__link--whatsapp svg {
+  width: 20px;
+  height: 20px;
+  color: #25d366;
+}
+
 .nav__link--cta {
   background: var(--color-primary);
   color: #fff !important;
@@ -358,6 +373,27 @@ ul { list-style: none; }
 .hero__inner {
   position: relative;
   z-index: 2;
+  /* Wide gap between text and form leaves room for the tear */
+  grid-template-columns: 1fr minmax(0, 440px);
+  gap: 180px;
+}
+
+/* Hero intake form */
+.hero__form-wrap .contact__form {
+  padding: 32px 32px 28px;
+  gap: 16px;
+}
+
+.hero__form-header h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.hero__form-header p {
+  margin-top: 4px;
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
 }
 
 .hero__tear {
@@ -856,6 +892,17 @@ ul { list-style: none; }
 }
 
 /* =============================================
+   WAAROM NIET ZELF
+   ============================================= */
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 880px;
+  margin-inline: auto;
+}
+
+/* =============================================
    CONTACT / FORM
    ============================================= */
 .contact__inner {
@@ -863,6 +910,15 @@ ul { list-style: none; }
   grid-template-columns: 1fr 1.2fr;
   gap: 80px;
   align-items: start;
+}
+
+.contact__inner--single {
+  grid-template-columns: 1fr;
+  max-width: 640px;
+}
+
+.link--light {
+  color: #fff;
 }
 
 .contact__info {
@@ -1120,6 +1176,11 @@ ul { list-style: none; }
    RESPONSIVE
    ============================================= */
 @media (max-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
   .services__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1174,6 +1235,10 @@ ul { list-style: none; }
   .hero__inner {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .why__grid {
+    grid-template-columns: 1fr;
   }
 
   .hero__visual {

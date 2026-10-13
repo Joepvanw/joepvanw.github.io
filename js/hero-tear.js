@@ -1,15 +1,15 @@
 /* =============================================
    HERO TEAR
    Draws a torn opening in the empty space between the hero text and the
-   stat cards. On load the tear rips open while the hero trembles briefly.
+   intake form. On load the tear rips open while the hero trembles briefly.
    Skipped when there is no room for it (stacked mobile layout).
    ============================================= */
 (function () {
   const hero = document.querySelector('.hero');
   if (!hero) return;
   const content = hero.querySelector('.hero__content');
-  const cards = hero.querySelectorAll('.hero__card');
-  if (!content || !cards.length) return;
+  const form = hero.querySelector('.contact__form');
+  if (!content || !form) return;
 
   const NS = 'http://www.w3.org/2000/svg';
   const RIP_DELAY = 350;     // ms before the tear starts forming
@@ -184,29 +184,22 @@
     el('polygon', { points, fill: 'none', stroke: '#000', 'stroke-width': 18, opacity: 0.7, filter: 'url(#tear-inner)' }, inside);
   }
 
-  // Free space between the text column and the cards, in hero coordinates.
+  // Free space between the text column and the form, in hero coordinates.
   function layout() {
     const heroBox = hero.getBoundingClientRect();
     const contentBox = content.getBoundingClientRect();
-    let cardsLeft = Infinity;
-    let cardsTop = Infinity;
-    let cardsBottom = -Infinity;
-    cards.forEach((card) => {
-      const cardBox = card.getBoundingClientRect();
-      cardsLeft = Math.min(cardsLeft, cardBox.left);
-      cardsTop = Math.min(cardsTop, cardBox.top);
-      cardsBottom = Math.max(cardsBottom, cardBox.bottom);
-    });
+    const formBox = form.getBoundingClientRect();
     const gapLeft = contentBox.right - heroBox.left;
-    const gapRight = cardsLeft - heroBox.left;
+    const gapRight = formBox.left - heroBox.left;
     return {
       width: heroBox.width,
       height: heroBox.height,
       gap: gapRight - gapLeft,
-      mid: (gapLeft + gapRight) / 2,
-      // The tear spans the height of the cards, so it starts and ends on screen.
-      top: cardsTop - heroBox.top,
-      bottom: cardsBottom - heroBox.top,
+      // Left of centre, so the tear's flaps stay clear of the form.
+      mid: gapLeft + (gapRight - gapLeft) * 0.4,
+      // The tear spans only where text and form overlap, so it stays short.
+      top: Math.max(contentBox.top, formBox.top) - heroBox.top,
+      bottom: Math.min(contentBox.bottom, formBox.bottom) - heroBox.top,
     };
   }
 

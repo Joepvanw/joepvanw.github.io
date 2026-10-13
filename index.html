@@ -33,6 +33,7 @@
           <li><a href="#aanmerking" class="nav__link">Kom ik in aanmerking?</a></li>
           <li><a href="#werkwijze" class="nav__link">Werkwijze</a></li>
           <li><a href="#faq" class="nav__link">FAQ</a></li>
+          <li><a href="https://wa.me/31611479164" class="nav__link nav__link--whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp 06 1147 9164"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.01c-.24.68-1.42 1.3-1.95 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.58-.36.77-.36h.55c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.5-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.65-.14.26.1 1.68.79 1.97.94.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg><span>06 1147 9164</span></a></li>
           <li><a href="#contact" class="nav__link nav__link--cta">Gratis intake</a></li>
         </ul>
       </nav>
@@ -75,16 +76,63 @@
             <a href="#aanmerking" class="btn btn--outline btn--lg">Kijk of u in aanmerking komt</a>
           </div>
         </div>
-        <div class="hero__visual">
-          <div class="hero__card hero__card--main">
-            <div class="hero__card-icon">🏠</div>
-            <p class="hero__card-value">No cure No pay</p>
-          </div>
-          <div class="hero__card hero__card--tertiary">
-            <div class="hero__card-icon">⚡</div>
-            <p class="hero__card-label">Doorlooptijd</p>
-            <p class="hero__card-value">2–12 weken</p>
-          </div>
+        <div class="hero__form-wrap" id="contact">
+          <form class="contact__form" id="contactForm" novalidate>
+            <div class="hero__form-header">
+              <h2>Gratis intake aanvragen</h2>
+              <p>Wij nemen binnen 3 dagen contact met u op voor een vrijblijvend gesprek.</p>
+            </div>
+            <div class="form__row">
+              <div class="form__group">
+                <label for="voornaam">Voornaam *</label>
+                <input type="text" id="voornaam" name="voornaam" placeholder="" required />
+                <span class="form__error" id="voornaamError"></span>
+              </div>
+              <div class="form__group">
+                <label for="achternaam">Achternaam *</label>
+                <input type="text" id="achternaam" name="achternaam" placeholder="" required />
+                <span class="form__error" id="achternaamError"></span>
+              </div>
+            </div>
+            <div class="form__group">
+              <label for="email">E-mailadres *</label>
+              <input type="email" id="email" name="email" placeholder="" required />
+              <span class="form__error" id="emailError"></span>
+            </div>
+            <div class="form__group">
+              <label for="telefoon">Telefoonnummer</label>
+              <input type="tel" id="telefoon" name="telefoon" placeholder="" />
+            </div>
+            <div class="form__group">
+              <label for="adres">Adres van het pand *</label>
+              <input type="text" id="adres" name="adres" placeholder="" required />
+              <span class="form__error" id="adresError"></span>
+            </div>
+            <div class="form__group">
+              <label for="situatie">Beschrijf uw situatie kort</label>
+              <textarea id="situatie" name="situatie" rows="3" placeholder="Bijv. scheuren in de woning, eerdere afwijzing van IMG... Geef ook aan of u al eerder een schademelding heeft ingediend."></textarea>
+            </div>
+            <div class="form__group form__group--checkbox">
+              <label class="checkbox-label">
+                <input type="checkbox" id="gebeld" name="gebeld" />
+                <span>Ik wil gebeld worden</span>
+              </label>
+            </div>
+            <div class="form__group form__group--checkbox">
+              <label class="checkbox-label">
+                <input type="checkbox" id="akkoord" name="akkoord" required />
+                <span>Ik ga akkoord met de <a href="privacy.html" target="_blank" class="link">privacyverklaring</a> *</span>
+              </label>
+              <span class="form__error" id="akkoordError"></span>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full btn--lg" id="submitBtn">
+              Gratis intake aanvragen
+            </button>
+            <div class="form__success" id="formSuccess" hidden>
+              <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#16a34a"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p>Dankjewel voor uw aanvraag. Wij nemen zo snel mogelijk contact met u op.</p>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -231,6 +279,29 @@
 
 
 
+    <!-- ===================== WAAROM NIET ZELF ===================== -->
+    <section class="section section--alt" id="waarom">
+      <div class="container">
+        <div class="section__header">
+          <span class="badge">Waarom niet zelf?</span>
+          <h2 class="section__title">Waarom niet zelf naar het IMG?</h2>
+          <p class="section__subtitle">Dat kan natuurlijk. Maar met onze hulp staat u er niet alleen voor en wordt uw schade volledig vastgelegd.</p>
+        </div>
+        <div class="why__grid">
+          <div class="service-card">
+            <div class="service-card__icon">🤝</div>
+            <h3>Wij nemen alles uit handen</h3>
+            <p>Van de melding en het dossier tot de communicatie met het IMG en eventuele bezwaren: wij regelen het voor u. U hoeft zelf niets uit te zoeken.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-card__icon">🔍</div>
+            <h3>Zorgvuldige inspectie van het hele pand</h3>
+            <p>Wij nemen de tijd om het gehele pand zorgvuldig te inspecteren, zodat elke schade in het rapport goed vastgelegd wordt. Zo beoordeelt het IMG uw aanvraag op basis van het complete plaatje.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== FAQ ===================== -->
     <section class="section" id="faq">
       <div class="container">
@@ -245,7 +316,7 @@
               <svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
             <div class="faq__answer">
-              <p>Wij werken uitsluitend op basis van <strong>No Cure, No Pay</strong>. Dat betekent: u betaalt pas als uw aanvraag succesvol wordt toegewezen en u daadwerkelijk een vergoeding ontvangt. De fee bedraagt een vooraf afgesproken percentage van de ontvangen vergoeding. Levert onze inzet geen resultaat op, dan betaalt u helemaal niets. Geen verborgen kosten en geen risico voor u.</p>
+              <p>Wij werken uitsluitend op basis van <strong>No Cure, No Pay</strong>. Dat betekent: u betaalt pas als uw aanvraag succesvol wordt toegewezen en u daadwerkelijk een vergoeding ontvangt. De fee bedraagt <strong>15% van de ontvangen vergoeding</strong>. Levert onze inzet geen resultaat op, dan betaalt u helemaal niets. Geen verborgen kosten en geen risico voor u.</p>
             </div>
           </div>
           <div class="faq__item">
@@ -254,12 +325,12 @@
               <svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
             <div class="faq__answer">
-              <p>De doorlooptijd varieert per situatie, maar gemiddeld duurt een aanvraag <strong>6 tot 12 weken</strong>. Complexere zaken of bezwaarprocedures kunnen langer duren. Wij houden u doorlopend op de hoogte van de voortgang.</p>
+              <p>De doorlooptijd varieert per situatie, maar gemiddeld duurt een aanvraag <strong>2 tot 12 weken</strong>. Complexere zaken of bezwaarprocedures kunnen langer duren. Wij houden u doorlopend op de hoogte van de voortgang.</p>
             </div>
           </div>
           <div class="faq__item">
             <button class="faq__question" aria-expanded="false">
-              Kan ik ook helpen als mijn schade al eerder is afgewezen?
+              Kunnen jullie ook helpen als mijn schade al eerder is afgewezen?
               <svg class="faq__chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
             <div class="faq__answer">
@@ -289,12 +360,12 @@
     </section>
 
     <!-- ===================== CONTACT / INTAKE ===================== -->
-    <section class="section section--dark" id="contact">
+    <section class="section section--dark" id="contactgegevens">
       <div class="container">
-        <div class="contact__inner">
+        <div class="contact__inner contact__inner--single">
           <div class="contact__info">
-            <h2 class="section__title section__title--light">Klaar om uw aanvraag te starten?</h2>
-            <p class="contact__subtitle">Vul het formulier in en wij nemen binnen 3 dagen contact met u op voor een vrijblijvend gesprek.</p>
+            <h2 class="section__title section__title--light">Liever direct contact?</h2>
+            <p class="contact__subtitle">Bel, app of mail ons gerust. Liever een formulier? <a href="#contact" class="link link--light">Vraag bovenaan een gratis intake aan.</a></p>
             <ul class="contact__list">
               <li>
                 <svg viewBox="0 0 20 20" fill="none"><path d="M10 2C7.24 2 5 4.24 5 7c0 3.75 5 11 5 11s5-7.25 5-11c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="currentColor"/></svg>
@@ -308,60 +379,12 @@
                 <svg viewBox="0 0 20 20" fill="none"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" fill="currentColor"/></svg>
                 <span><a href="tel:+31611479164">+31 611479164</a></span>
               </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.01c-.24.68-1.42 1.3-1.95 1.35-.5.05-1.13.07-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.58-.36.77-.36h.55c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.5-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.42.29.14.46.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.65-.14.26.1 1.68.79 1.97.94.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+                <span><a href="https://wa.me/31611479164" target="_blank" rel="noopener">WhatsApp</a></span>
+              </li>
             </ul>
           </div>
-          <form class="contact__form" id="contactForm" novalidate>
-            <div class="form__row">
-              <div class="form__group">
-                <label for="voornaam">Voornaam *</label>
-                <input type="text" id="voornaam" name="voornaam" placeholder="" required />
-                <span class="form__error" id="voornaamError"></span>
-              </div>
-              <div class="form__group">
-                <label for="achternaam">Achternaam *</label>
-                <input type="text" id="achternaam" name="achternaam" placeholder="" required />
-                <span class="form__error" id="achternaamError"></span>
-              </div>
-            </div>
-            <div class="form__group">
-              <label for="email">E-mailadres *</label>
-              <input type="email" id="email" name="email" placeholder="" required />
-              <span class="form__error" id="emailError"></span>
-            </div>
-            <div class="form__group">
-              <label for="telefoon">Telefoonnummer</label>
-              <input type="tel" id="telefoon" name="telefoon" placeholder="" />
-            </div>
-            <div class="form__group">
-              <label for="adres">Adres van het pand *</label>
-              <input type="text" id="adres" name="adres" placeholder="" required />
-              <span class="form__error" id="adresError"></span>
-            </div>
-            <div class="form__group">
-              <label for="situatie">Beschrijf uw situatie kort</label>
-              <textarea id="situatie" name="situatie" rows="4" placeholder="Bijv. scheuren in de woning, eerdere afwijzing van IMG... Geef ook aan of u al eerder een schademelding heeft ingediend."></textarea>
-            </div>
-            <div class="form__group form__group--checkbox">
-              <label class="checkbox-label">
-                <input type="checkbox" id="gebeld" name="gebeld" />
-                <span>Ik wil gebeld worden</span>
-              </label>
-            </div>
-            <div class="form__group form__group--checkbox">
-              <label class="checkbox-label">
-                <input type="checkbox" id="akkoord" name="akkoord" required />
-                <span>Ik ga akkoord met de <a href="privacy.html" target="_blank" class="link">privacyverklaring</a> *</span>
-              </label>
-              <span class="form__error" id="akkoordError"></span>
-            </div>
-            <button type="submit" class="btn btn--primary btn--full btn--lg" id="submitBtn">
-              Gratis intake aanvragen
-            </button>
-            <div class="form__success" id="formSuccess" hidden>
-              <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#16a34a"/><path d="M6 10l3 3 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p>Dankjewel voor uw aanvraag. Ik neem zo snel mogelijk contact met u op.</p>
-            </div>
-          </form>
         </div>
       </div>
     </section>
