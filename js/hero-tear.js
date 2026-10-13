@@ -189,7 +189,14 @@
     const heroBox = hero.getBoundingClientRect();
     const contentBox = content.getBoundingClientRect();
     let cardsLeft = Infinity;
-    cards.forEach((card) => { cardsLeft = Math.min(cardsLeft, card.getBoundingClientRect().left); });
+    let cardsTop = Infinity;
+    let cardsBottom = -Infinity;
+    cards.forEach((card) => {
+      const cardBox = card.getBoundingClientRect();
+      cardsLeft = Math.min(cardsLeft, cardBox.left);
+      cardsTop = Math.min(cardsTop, cardBox.top);
+      cardsBottom = Math.max(cardsBottom, cardBox.bottom);
+    });
     const gapLeft = contentBox.right - heroBox.left;
     const gapRight = cardsLeft - heroBox.left;
     return {
@@ -197,6 +204,9 @@
       height: heroBox.height,
       gap: gapRight - gapLeft,
       mid: (gapLeft + gapRight) / 2,
+      // The tear spans the height of the cards, so it starts and ends on screen.
+      top: cardsTop - heroBox.top,
+      bottom: cardsBottom - heroBox.top,
     };
   }
 
@@ -205,14 +215,14 @@
     const svg = el('svg', { class: 'hero__tear', width: box.width, height: box.height, viewBox: '0 0 ' + box.width + ' ' + box.height, 'aria-hidden': 'true' });
     defs(svg);
 
-    const H = box.height;
     const x = box.mid;
+    const y = (t) => box.top + (box.bottom - box.top) * t;
     const line = centerline([
-      [x + 55, H * 0.04], [x + 20, H * 0.2], [x + 45, H * 0.38], [x - 5, H * 0.56],
-      [x + 20, H * 0.74], [x - 35, H * 0.96],
+      [x + 50, y(0)], [x + 20, y(0.2)], [x + 40, y(0.4)], [x - 5, y(0.6)],
+      [x + 15, y(0.8)], [x - 30, y(1)],
     ], 8, 5, rng(64));
     const widthRand = rng(37);
-    const tear = outline(line, (t) => 88 * k * Math.pow(Math.sin(Math.PI * t), 0.6) * (0.75 + widthRand() * 0.5), 5.5, rng(91));
+    const tear = outline(line, (t) => 80 * k * Math.pow(Math.sin(Math.PI * t), 0.6) * (0.75 + widthRand() * 0.5), 5.5, rng(91));
 
     const crackRand = rng(19);
     cracks(svg, tear, 11, 85 * k, 2.6, 1.2, crackRand);
