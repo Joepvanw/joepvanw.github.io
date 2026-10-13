@@ -192,7 +192,7 @@ form.addEventListener('submit', async (e) => {
     const json = await res.json();
 
     if (json.success) {
-      form.style.display = 'none';
+      Array.from(form.children).forEach(el => { if (el !== formSuccess) el.style.display = 'none'; });
       formSuccess.classList.add('visible');
       formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
